@@ -53,6 +53,3 @@ function getAudioSummary(data, artist_nr){
 	
 }
 
-
-
-

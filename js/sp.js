@@ -6,8 +6,6 @@ function sp(){
 
 	var scale = d3.scale.linear();
 
-
-
 	var dataset = [
 	  [256, 60], [480, 270], [250, 150], [100, 99], [330, 285],
 	  [410, 36], [475, 132], [25, 180], [85, 63], [220, 240]
@@ -82,7 +80,6 @@ function sp(){
 	  })
 	  .attr("font-size", "15px")
 	  .attr("fill", "black");
-
 }
 
 
