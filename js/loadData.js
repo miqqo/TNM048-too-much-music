@@ -51,6 +51,7 @@ function loadData(){
 		    if(artistSummary.length == 5){
 		    	console.log("helt färdig")
 		    	dataHandler.computeAverageParameters(artistSummary, audioSummary);
+		  
 		    }
 		    	
 		});
