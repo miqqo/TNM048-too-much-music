@@ -73,7 +73,7 @@ function pc(){
                 tip.transition()
                 .duration(200)
                 .style("opacity", 1);
-                tip .html(d.artist)
+                tip .html(d.Artist)
                 .style("left", (d3.event.pageX) + "px")     
                 .style("top", (d3.event.pageY + 30) + "px");    
             })
