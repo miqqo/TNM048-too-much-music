@@ -83,7 +83,7 @@ function pc(){
                 .style("opacity", 0);
             })
             .on("click", function(d){
-                self.selectLine(d.artist);
+                self.selectLine(d.Artist);
             });
 
 
@@ -114,7 +114,7 @@ function pc(){
     this.selectLine = function(value){
         d3.selectAll("path")
             .style("opacity", function(d){
-                if(d.artist == value) return 1;
+                if(d.Artist == value) return 1;
                 else return 0.3;
                 })
     };

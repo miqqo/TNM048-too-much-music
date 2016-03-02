@@ -1,13 +1,13 @@
 function map(){
 
 	var zoom = d3.behavior.zoom()
-		.scaleExtent([1, 8])
+		.scaleExtent([2, 8])
 		.on("zoom", move);
 
 	//lägg in vår map i rätt div och sätt storlek på den
 	var mapDiv = $("#map");
 
-	var margin = {top: 20, right: 0, bottom: 20, left: 0},
+	var margin = {top: 20, right: 0, bottom: 20, left: 20},
         width = mapDiv.width();//- margin.right - margin.left,
         height = mapDiv.height() - margin.top - margin.bottom;
 
@@ -18,8 +18,8 @@ function map(){
         .call(zoom);
 
 	var projection = d3.geo.mercator()
-        .center([50, 60 ])
-        .scale(250);
+        .center([10, 50 ])
+        .scale(300);
 
     var path = d3.geo.path()
     	.projection(projection);
