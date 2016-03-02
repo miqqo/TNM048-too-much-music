@@ -32,18 +32,18 @@ function pc(){
     this.startDrawing = function(){
         //5 artister
         //energy, danceability, speechiness
-        d3.csv("data/data.csv", function(data) {
-
-        self.data = data;
+        d3.csv("data/artist-data.csv", function(data) {
 
         // Extract the list of dimensions and create a scale for each.
         x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
-            return d != "artist" && (
+            return d != "Artist" && (
                 y[d] = d3.scale.linear().domain(d3.extent(data, function(p){
                     return +p[d];
                 }))
                 .range([height, 0]));
         }));
+
+        self.data = data;
 
         draw();
     });
@@ -54,11 +54,9 @@ function pc(){
         background = svg.append("svg:g")
             .attr("class", "background")
             .selectAll("path")
-            //add the data and append the path 
-            //...
             .data(self.data)
             .enter()
-            .append("path")
+            .append("svg:path")
             .attr("d", path)
             .on("mousemove", function(d){})
             .on("mouseout", function(){});
@@ -67,11 +65,9 @@ function pc(){
         foreground = svg.append("svg:g")
             .attr("class", "foreground")
             .selectAll("path")
-            //add the data and append the path 
-            //...
             .data(self.data)
             .enter()
-            .append("path")
+            .append("svg:path")
             .attr("d", path)
             .on("mousemove", function(d){
                 tip.transition()

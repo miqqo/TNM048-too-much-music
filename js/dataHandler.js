@@ -5,6 +5,7 @@ function dataHandler(){
 	this.computeAverageParameters = function(artistSummary, audioSummary){
 
 		//får 5 artister, 2 låtar var
+		//summerar alla artisters låtar per parameter
 		sumEnergy = computeEnergy(artistSummary, audioSummary);
 		sumDanceability = computeDanceability(artistSummary, audioSummary);
 		sumSpeechiness = computeSpeechiness(artistSummary, audioSummary);
