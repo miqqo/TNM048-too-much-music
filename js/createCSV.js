@@ -1,7 +1,7 @@
 //ONLY NEED TO DO THIS ONCE AND SAVE THE CSV FILE
 function createCSV(artistSummary, result){
 	console.log("i csv")
-	var nrOfParameters = 3;
+	var nrOfParameters = 4;
 	var data = [];
 
 	for (var i = 0; i <= artistSummary.length; i++)

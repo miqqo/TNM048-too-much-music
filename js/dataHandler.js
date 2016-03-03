@@ -1,14 +1,20 @@
 function dataHandler(){
-	var sumEnergy, sumDanceability, sumSpeechiness, artists;
+	var sumEnergy, sumDanceability, sumSpeechiness, artists, countries;
 	
 
 	//Beräknar summan av de valda parametrarna för varje artist
-	this.computeAverageParameters = function(artistSummary, audioSummary){
+	this.computeAverageParameters = function(artistSummary, audioSummary, country){
 
 		//får 5 artister, 2 låtar var
 		//summerar alla artisters låtar per parameter
-		artists = [];
+		artists = [], countries = [];
+
+		countries.push("Country");
 		artists.push("Artist");
+
+		for(var i = 0; i < artistSummary.length; i++){
+			countries.push(country);
+		}
 		for(var i = 0; i < artistSummary.length; i++){
 			artists.push(artistSummary[i][0][0].artist_name);
 		}
@@ -26,7 +32,7 @@ function dataHandler(){
 		var result = [];
 		result = getParameters();
 
-		// createCSV(artistSummary, result);
+		 createCSV(artistSummary, result);
 
 		pc1.startDrawing();
 
@@ -81,6 +87,7 @@ function dataHandler(){
 
 	function getParameters(){
 		var paramArray = [];
+		paramArray.push(countries);
 		paramArray.push(artists);
 		paramArray.push(sumEnergy);
 		paramArray.push(sumDanceability);

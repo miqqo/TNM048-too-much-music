@@ -32,11 +32,11 @@ function pc(){
     this.startDrawing = function(){
         //5 artister
         //energy, danceability, speechiness
-        d3.csv("data/artist-data.csv", function(data) {
+        d3.csv("data/test.csv", function(data) {
 
         // Extract the list of dimensions and create a scale for each.
         x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
-            return d != "Artist" && (
+            return (d != "Country" && d != "Artist") && (
                 y[d] = d3.scale.linear().domain(d3.extent(data, function(p){
                     return +p[d];
                 }))

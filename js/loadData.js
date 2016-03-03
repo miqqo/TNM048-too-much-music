@@ -1,8 +1,9 @@
 // API-key: GKC2LETMWJQDKAC0H 
-function loadData(country){
+function loadData(){
 
 	var data;
-	country = country.toLowerCase();
+	//country = country.toLowerCase();
+	var country = "united kingdom";
 	var artistSummary = [];
 	getArtist(country);
 
@@ -49,7 +50,7 @@ function loadData(country){
 
 		    if(artistSummary.length == 10){
 		    	console.log("helt färdig")
-		    	dataHandler.computeAverageParameters(artistSummary, audioSummary);
+		    	dataHandler.computeAverageParameters(artistSummary, audioSummary, country);
 		  
 		    }
 		    	

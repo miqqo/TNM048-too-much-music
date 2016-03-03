@@ -36,7 +36,8 @@ function sp(){
     drawAxes();
     this.startDrawing = function(country){
     	//Load data
-	    d3.csv("data/artist-data.csv", function(error, data) {
+    	country = country.toLowerCase();
+	    d3.csv("data/sum-artist-data.csv", function(error, data) {
 	        self.predata = data;
 	        self.data = [];
 	        

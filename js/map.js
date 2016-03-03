@@ -84,7 +84,7 @@ function map(){
             //	d3.select(current).style("fill", "lightgray");
               //  current = d3.select(this).style("fill", "red");
               	selectCountry(d.properties.name);
-                // loadData(d.properties.name);
+               // loadData();
                 //pc1.startDrawing();
                 sp1.startDrawing(d.properties.name);
                
