@@ -1,13 +1,13 @@
 // API-key: GKC2LETMWJQDKAC0H 
-function loadData(){
+function loadData(country){
 
 	var data;
-	var country = "sweden";
+	country = country.toLowerCase();
 	var artistSummary = [];
 	getArtist(country);
 
 	function getArtist(country){
-		var url_location = 'http://developer.echonest.com/api/v4/artist/search?api_key=GKC2LETMWJQDKAC0H&format=json&artist_location=country:'+country+'&bucket=artist_location&results=5';
+		var url_location = 'http://developer.echonest.com/api/v4/artist/search?api_key=GKC2LETMWJQDKAC0H&format=json&artist_location=country:'+country+'&bucket=artist_location&results=10';
 
 		$.getJSON(url_location, function(json) {
 		    data = json; 
@@ -18,11 +18,10 @@ function loadData(){
 		});	
 	}
 
-	// räknar ut det totala värdet av en parameter för totalt x låtar
-	// ev hämtar ut all info om artistens låtar och lägger in en array som vi kan använda sen
+	//get the song data from each artist
 	function getArtistData(artist_id, artist_nr){
 		
-		var url_artist = 'http://developer.echonest.com/api/v4/artist/songs?api_key=GKC2LETMWJQDKAC0H&id='+artist_id+'&format=json&start=0&results=2';
+		var url_artist = 'http://developer.echonest.com/api/v4/artist/songs?api_key=GKC2LETMWJQDKAC0H&id='+artist_id+'&format=json&start=0&results=5';
 
 		var req = $.getJSON(url_artist, function(json) {
 		    getAudioSummary(json.response.songs, artist_nr);  
@@ -48,7 +47,7 @@ function loadData(){
 		req.success(function(response){
 		    artistSummary.push(audioSummary);
 
-		    if(artistSummary.length == 5){
+		    if(artistSummary.length == 10){
 		    	console.log("helt färdig")
 		    	dataHandler.computeAverageParameters(artistSummary, audioSummary);
 		  
