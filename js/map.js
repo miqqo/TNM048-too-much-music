@@ -46,26 +46,24 @@ function map(){
         var country = g.selectAll(".country").data(countries);
 
         var colorCountry = {};
+        var choosen = [];
 
 	   	var currentColor = "white";
 	        
         country.enter().insert("path")
-        .attr("class", "country")
-        .attr("d", path)
-        .attr("id", function(d){ return d.id})
-        .attr("title", function(d) { return d.properties.name})
+            .attr("class", "country")
+            .attr("d", path)
+            .attr("id", function(d){ return d.id})
+            .attr("title", function(d) { return d.properties.name})
 
-        .style('stroke-width', 1)
-        .style("fill", "lightgray")
-       /* .style("fill", function(d, i){
-                return colors(d.properties.name);
-            })*/
-        .style("stroke", "white")
-
-        
-
-        //tooltip
-        .on("mousemove", function(d) {
+            .style('stroke-width', 1)
+            .style("fill", "lightgray")
+           /* .style("fill", function(d, i){
+                    return colors(d.properties.name);
+                })*/
+                .style("stroke", "white")
+            //tooltip
+            .on("mousemove", function(d) {
                 tip.transition()
                 .duration(200)
                 .style("opacity", 1);
@@ -78,19 +76,14 @@ function map(){
                 .duration(500)      
                 .style("opacity", 0);
             })
-          //  .on("click", );
             .on("click",  function(d) {
-            	//detta ska skickas vidare till scatterplot!
-            //	d3.select(current).style("fill", "lightgray");
-              //  current = d3.select(this).style("fill", "red");
+            
+                choosen.push(d.properties.name.toLowerCase());
               	selectCountry(d.properties.name);
-               // loadData();
-                pc1.startDrawing();
-                sp1.startDrawing(d.properties.name);
+                console.log("choosen: " + choosen)
+                sp1.startDrawing(choosen);
+                // sp1.startDrawing(d.properties.name);
                
-                console.log(d.properties.name);
-
-
             });
     }
 

@@ -1,5 +1,7 @@
 function sp(){
-	var self = this; // for internal d3 functions
+	
+
+    var self = this; // for internal d3 functions
 
     var spDiv = $("#sp");
 
@@ -33,36 +35,36 @@ function sp(){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    drawAxes();
-    this.startDrawing = function(country){
+    
+   // drawAxes()
+    this.startDrawing = function(countries){
+
     	//Load data
-    	country = country.toLowerCase();
 	    d3.csv("data/sum-artist-data.csv", function(error, data) {
 	        self.predata = data;
 	        self.data = [];
 	        
-	        
-		        self.predata.forEach(function(d){
-		        	if(d["Country"] == country){
-	        		x.domain([0, d3.max(data, function(d) { return d["energy"]; })]);
-	            	y.domain([0, d3.max(data, function(d) { return d["speechiness"]; })]);
-	            	self.data.push(d);
-		        }
-		        })
-		    
+	        self.predata.forEach(function(d){
+                for(var i = 0; i < countries.length; i++){
+                       if(d["Country"] == countries[i]){
+                        self.data.push(d); 
+                    }
+	            }
+	        })             
 
-	        drawDots();
+            x.domain([0 , 5]);
+            y.domain([0 , 1]);
+       
+           drawDots();
 	    });
     }
-    
-    function drawAxes(){
-    	    	// Create x- and yAxis
-	/*	svg.append("g")
-		    .attr("class", "axis")
-		    .attr("transform", "translate(10," + (height - 20) + ")")
-		    .call(xAxis);*/
+    self.startDrawing("");
 
-		svg.append("g")
+   
+    
+    function drawDots(){
+
+        svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis)
@@ -71,13 +73,7 @@ function sp(){
             .attr("x", width)
             .attr("y", -6);
 
-
-	/*	svg.append("g")
-		    .attr("class", "axis")
-		    .attr("transform", "translate(20,30)")
-		    .call(yAxis);*/
-
-		// Add y axis and title.
+        // Add y axis and title.
         svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
@@ -87,7 +83,7 @@ function sp(){
             .attr("y", 6)
             .attr("dy", ".71em");
 
-		// Add x-axis label
+        // Add x-axis label
         svg.append("text")
             .attr("class", "x label")
             .attr("text-anchor", "end")
@@ -105,11 +101,6 @@ function sp(){
             .attr("transform", "rotate(-90)")
             .text("Life satisfaction");
 
-    }
-
-    function drawDots(){
-
-		
 		svg.selectAll("circle")
 		  .data(self.data)
 		  .enter()
@@ -118,30 +109,14 @@ function sp(){
 		    return x(d["energy"]);
 		  })
 		  .attr("cy", function(d) {
-		    return x(d["speechiness"])
+		    return y(d["speechiness"])
 		  })
 		  .attr("r", function(d) {
 		    return 5;
 		  })
 		  .attr("fill", "#00aa88");
 
-		/*svg.selectAll("text")
-		  .data(self.data)
-		  .enter()
-		  .append("text")
-		  .text(function(d) {
-		    return d[0] + "," + d[1];
-		  })
-		  .attr("x", function(d) {
-		    return x(d["energy"])
-		  })
-		  .attr("y", function(d) {
-		    return x(d["speechiness"])
-		  })
-		  .attr("font-size", "15px")
-		  .attr("fill", "black");*/
     }
-
 	
 }
 

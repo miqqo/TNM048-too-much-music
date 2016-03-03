@@ -44,7 +44,7 @@ function pc(){
         }));
 
         self.data = data;
-        console.log("dataSize: " + data.length)
+        
 
         draw();
     });
