@@ -13,8 +13,10 @@ function pc(){
         .attr("class", "tooltip")               
         .style("opacity", 0);
 
-    var x = d3.scale.ordinal().rangePoints([0, width], 1),
-        y = {};
+    var x = d3.scale.ordinal().rangePoints([0, width], 1);
+      //  y = {};
+    var y = d3.scale.linear()
+        .range([height, 0]);
         
 
     var line = d3.svg.line(),
@@ -28,30 +30,57 @@ function pc(){
         .append("svg:g")
         .attr("transform", "translate(" + margin[3] + "," + margin[0] + ")");
 
+    var counter = 0;
 
-    this.startDrawing = function(){
 
+    this.startDrawing = function(artist){
+        console.log(artist);
+        counter++;
         // Artist, title, acousticness, tempo, danceability, energy, instrumentalness, speechiness
         d3.csv("data/song-data.csv", function(data) {
 
         // Extract the list of dimensions and create a scale for each.
         x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
             return (d != "title" && d != "Artist") &&  (
-                y[d] = d3.scale.linear().domain(d3.extent(data, function(p){
-                    return +p[d];
-                }))
-                .range([height, 0]));
+            y[d] = d3.scale.linear().domain(d3.extent(data, function(p){
+                return +p[d];
+            }))
+            .range([height, 0]));
         }));
 
-        self.data = data;
-        
+        self.fullData = data;
+        self.data = [];
+        //hämta ut aktuell data
+        self.fullData.forEach(function(d){
+            if(d.Artist == artist){
+                self.data.push(d);
+            }
+        })
+
 
         draw();
     });
 
     }
+    self.startDrawing("");
+
+    function drawAxes(){
+
+
+    svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("x", width)
+            .attr("y", -6);
+
+
+    }
 
     function draw(){
+
         background = svg.append("svg:g")
             .attr("class", "background")
             .selectAll("path")

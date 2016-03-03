@@ -1,10 +1,16 @@
-.country{ fill: rgb(0, 75, 151); }
+/*.country{ fill: rgb(0, 75, 151); }
 
 .country:hover{
     stroke: #fff;
     stroke-width: .7px;
     cursor:pointer;
 
+}
+.axis path,
+.axis line{
+    stroke: black ;
+    fill: none;
+    shape-rendering: crispEdges;
 }
 
 .country.Sweden { fill: #dd0400; }
@@ -24,3 +30,4 @@ div.tooltip {
     position: absolute;
 }
 
+*/

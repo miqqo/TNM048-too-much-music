@@ -1,6 +1,8 @@
 function map(){
 
-	var zoom = d3.behavior.zoom()
+	var choosen = [];
+
+    var zoom = d3.behavior.zoom()
 		.scaleExtent([2, 8])
 		.on("zoom", move);
 
@@ -46,7 +48,7 @@ function map(){
         var country = g.selectAll(".country").data(countries);
 
         var colorCountry = {};
-        var choosen = [];
+        
 
 	   	var currentColor = "white";
 	        
@@ -55,13 +57,9 @@ function map(){
             .attr("d", path)
             .attr("id", function(d){ return d.id})
             .attr("title", function(d) { return d.properties.name})
-
             .style('stroke-width', 1)
             .style("fill", "lightgray")
-           /* .style("fill", function(d, i){
-                    return colors(d.properties.name);
-                })*/
-                .style("stroke", "white")
+            .style("stroke", "white")
             //tooltip
             .on("mousemove", function(d) {
                 tip.transition()
@@ -77,25 +75,22 @@ function map(){
                 .style("opacity", 0);
             })
             .on("click",  function(d) {
-            
-                choosen.push(d.properties.name.toLowerCase());
-              	selectCountry(d.properties.name);
-                console.log("choosen: " + choosen)
+                // choosen.push(d.properties.name.toLowerCase());
+                choosen.push(d.properties.name);
+                map.selectDot(choosen);
+
                 sp1.startDrawing(choosen);
-                // sp1.startDrawing(d.properties.name);
+
                
             });
     }
 
-    function selectCountry(value){
-
-    	d3.selectAll(".country")
-    	.style("fill",function(d){
-            if(d.properties.name == value){
-                return "red";
-            }
+    this.selectDot = function(value){
+        d3.selectAll(".country")
+         .style("fill",function(d){  
+            if( value.indexOf(d.properties.name) != -1) return "red";      
             else return "lightgray";
-        })
+         });
     }
 
     //zoom and panning method
@@ -108,6 +103,15 @@ function map(){
         g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
 
     }
+
+    //on click, reset data
+    d3.select("h4")
+        .on("click", function() {
+            for(var i = 0; i < choosen.length; i++){
+                choosen[i] = "";
+            }
+            map.selectDot(choosen)
+        });
 
 }
 
