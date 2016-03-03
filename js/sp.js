@@ -114,6 +114,7 @@ function sp(){
 		  .data(self.data)
 		  .enter()
 		  .append("circle")
+		  .attr("class", "dot")
 		  .attr("cx", function(d) {
 		    return x(d["energy"]);
 		  })
@@ -123,7 +124,26 @@ function sp(){
 		  .attr("r", function(d) {
 		    return 5;
 		  })
-		  .attr("fill", "#00aa88");
+		  .attr("fill", "#00aa88")
+		  //tooltip
+	        .on("mousemove", function(d) {
+	            tip.transition()
+	            .duration(200)
+	            .style("opacity", 1);
+	            tip .html(d.Artist)
+	            .style("left", (d3.event.pageX - 250) + "px")     
+	            .style("top", (d3.event.pageY - 40) + "px");    
+	        })
+	        .on("mouseout", function(d) {
+	            tip.transition()        
+	            .duration(500)      
+	            .style("opacity", 0);
+	        })
+		  .on("click",  function(d) {
+		  		self.selectDot(d.Artist);
+	            pc1.startDrawing(d.Artist);
+
+	        });
 
 		/*svg.selectAll("text")
 		  .data(self.data)
@@ -141,6 +161,21 @@ function sp(){
 		  .attr("font-size", "15px")
 		  .attr("fill", "black");*/
     }
+
+    //method for selecting the dot from other components
+    this.selectDot = function(value){
+
+        d3.selectAll("circle")
+        .style("opacity",function(d){
+            if(d.Artist == value){
+                return 1;
+            }
+            else return 0.3;
+        })
+
+    };
+
+    
 
 	
 }
