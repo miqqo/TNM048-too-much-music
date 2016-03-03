@@ -1,85 +1,135 @@
 function sp(){
-	// var self = this;
+	var self = this; // for internal d3 functions
 
-	var w = 800;
-	var h = 400;
+    var spDiv = $("#sp");
 
-	var scale = d3.scale.linear();
+    var margin = {top: 20, right: 200, bottom: 30, left: 40},
+        width = spDiv.width() - margin.right - margin.left,
+        height = spDiv.height() - margin.top - margin.bottom;
 
-	var dataset = [
-	  [256, 60], [480, 270], [250, 150], [100, 99], [330, 285],
-	  [410, 36], [475, 132], [25, 180], [85, 63], [220, 240]
-	];
+    
+    //initialize tooltip
+    var tip = d3.select("#sp").append("div")
+        .attr("class", "tooltip")               
+        .style("opacity", 0);
 
-	var xScale = d3.scale.linear()
- 	    .domain([0, d3.max(dataset, function(d) { return d[0]; })])
-        .range([10, w-50]);
+    var x = d3.scale.linear()
+        .range([0, width]);
 
-    var yScale = d3.scale.linear()
-         .domain([0, d3.max(dataset, function(d) { return d[1]; })])
-         .range([h-50, 50]);
+    var y = d3.scale.linear()
+        .range([height, 0]);
 
-
-	//Create SVG element
-	var svg = d3.select("#sp")
-	  .append("svg")
-	  .attr("width", w)
-	  .attr("height", h);
-
-
-	// Define x- and yAxis
-	var xAxis = d3.svg.axis()
-                  .scale(xScale)
-                  .orient("bottom");
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
 
     var yAxis = d3.svg.axis()
-                  .scale(yScale)
-                  .orient("left")
-                  .ticks(5);
+        .scale(y)
+        .orient("left");
 
-	// Create x- and yAxis
-	svg.append("g")
-	    .attr("class", "axis")
-	    .attr("transform", "translate(10," + (h - 20) + ")")
-	    .call(xAxis);
+    var svg = d3.select("#sp").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    //Load data
+    d3.csv("data/artist-data.csv", function(error, data) {
+        self.data = data;
+        
+        self.data.forEach(function(d){
+            x.domain([0, d3.max(data, function(d) { return d["energy"]; })]);
+            y.domain([0, d3.max(data, function(d) { return d["speechiness"]; })]);
+
+        })
+
+        draw();
+    });
+
+    function draw(){
+    	// Create x- and yAxis
+	/*	svg.append("g")
+		    .attr("class", "axis")
+		    .attr("transform", "translate(10," + (height - 20) + ")")
+		    .call(xAxis);*/
+
+		svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("x", width)
+            .attr("y", -6);
 
 
-	svg.append("g")
-	    .attr("class", "axis")
-	    .attr("transform", "translate(20,30)")
-	    .call(yAxis);
+	/*	svg.append("g")
+		    .attr("class", "axis")
+		    .attr("transform", "translate(20,30)")
+		    .call(yAxis);*/
+
+		// Add y axis and title.
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em");
+
+		// Add x-axis label
+        svg.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "end")
+            .attr("x", width/1.5)
+            .attr("y", height + 30)
+            .text("speechiness");
+
+        // Add y-axis label
+        svg.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .attr("y", -40)
+            .attr("x", -100)
+            .attr("dy", ".75em")
+            .attr("transform", "rotate(-90)")
+            .text("Life satisfaction");
+
+		
+		svg.selectAll("circle")
+		  .data(self.data)
+		  .enter()
+		  .append("circle")
+		  .attr("cx", function(d) {
+		    return x(d["energy"]);
+		  })
+		  .attr("cy", function(d) {
+		    return x(d["speechiness"])
+		  })
+		  .attr("r", function(d) {
+		    return 5;
+		  })
+		  .attr("fill", "#00aa88");
+
+		/*svg.selectAll("text")
+		  .data(self.data)
+		  .enter()
+		  .append("text")
+		  .text(function(d) {
+		    return d[0] + "," + d[1];
+		  })
+		  .attr("x", function(d) {
+		    return x(d["energy"])
+		  })
+		  .attr("y", function(d) {
+		    return x(d["speechiness"])
+		  })
+		  .attr("font-size", "15px")
+		  .attr("fill", "black");*/
+    }
 
 	
-	svg.selectAll("circle")
-	  .data(dataset)
-	  .enter()
-	  .append("circle")
-	  .attr("cx", function(d) {
-	    return xScale(d[0]);
-	  })
-	  .attr("cy", function(d) {
-	    return yScale(d[1]);
-	  })
-	  .attr("r", function(d) {
-	    return Math.sqrt(h - d[1]);
-	  })
-	  .attr("fill", "#00aa88");
-
-	svg.selectAll("text")
-	  .data(dataset)
-	  .enter()
-	  .append("text")
-	  .text(function(d) {
-	    return d[0] + "," + d[1];
-	  })
-	  .attr("x", function(d) {
-	    return xScale(d[0]);
-	  })
-	  .attr("y", function(d) {
-	    return yScale(d[1]);
-	  })
-	  .attr("font-size", "15px")
-	  .attr("fill", "black");
 }
 
 
