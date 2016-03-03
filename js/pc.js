@@ -30,13 +30,13 @@ function pc(){
 
 
     this.startDrawing = function(){
-        //5 artister
-        //energy, danceability, speechiness
-        d3.csv("data/artist-data.csv", function(data) {
+        // Artist, title, acousticness, tempo, danceability, energy, instrumentalness, speechiness
+        d3.csv("data/song-data.csv", function(data) {
 
         // Extract the list of dimensions and create a scale for each.
         x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
-            return d != "Artist" && (
+            return (d != "title" && d != "Artist") &&  (
+
                 y[d] = d3.scale.linear().domain(d3.extent(data, function(p){
                     return +p[d];
                 }))
@@ -44,6 +44,7 @@ function pc(){
         }));
 
         self.data = data;
+        console.log("dataSize: " + data.length)
 
         draw();
     });
@@ -61,7 +62,6 @@ function pc(){
             .on("mousemove", function(d){})
             .on("mouseout", function(){});
 
-
         foreground = svg.append("svg:g")
             .attr("class", "foreground")
             .selectAll("path")
@@ -73,7 +73,7 @@ function pc(){
                 tip.transition()
                 .duration(200)
                 .style("opacity", 1);
-                tip .html(d.Artist)
+                tip .html(d.title)
                 .style("left", (d3.event.pageX) + "px")     
                 .style("top", (d3.event.pageY + 30) + "px");    
             })

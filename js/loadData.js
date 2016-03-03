@@ -4,10 +4,11 @@ function loadData(country){
 	var data;
 	country = country.toLowerCase();
 	var artistSummary = [];
+	console.log("i loadData: " + country)
 	getArtist(country);
 
 	function getArtist(country){
-		var url_location = 'http://developer.echonest.com/api/v4/artist/search?api_key=GKC2LETMWJQDKAC0H&format=json&artist_location=country:'+country+'&bucket=artist_location&results=10';
+		var url_location = 'http://developer.echonest.com/api/v4/artist/search?api_key=GKC2LETMWJQDKAC0H&format=json&artist_location=country:'+country+'&bucket=artist_location&results=2';
 
 		$.getJSON(url_location, function(json) {
 		    data = json; 
@@ -21,7 +22,7 @@ function loadData(country){
 	//get the song data from each artist
 	function getArtistData(artist_id, artist_nr){
 		
-		var url_artist = 'http://developer.echonest.com/api/v4/artist/songs?api_key=GKC2LETMWJQDKAC0H&id='+artist_id+'&format=json&start=0&results=5';
+		var url_artist = 'http://developer.echonest.com/api/v4/artist/songs?api_key=GKC2LETMWJQDKAC0H&id='+artist_id+'&format=json&start=0&results=15';
 
 		var req = $.getJSON(url_artist, function(json) {
 		    getAudioSummary(json.response.songs, artist_nr);  
@@ -47,9 +48,9 @@ function loadData(country){
 		req.success(function(response){
 		    artistSummary.push(audioSummary);
 
-		    if(artistSummary.length == 10){
-		    	console.log("helt färdig")
+		    if(artistSummary.length == 2){
 		    	dataHandler.computeAverageParameters(artistSummary, audioSummary);
+		    	createInfoCSV(artistSummary);
 		  
 		    }
 		    	
