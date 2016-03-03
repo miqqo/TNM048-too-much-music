@@ -33,21 +33,29 @@ function sp(){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    //Load data
-    d3.csv("data/artist-data.csv", function(error, data) {
-        self.data = data;
-        
-        self.data.forEach(function(d){
-            x.domain([0, d3.max(data, function(d) { return d["energy"]; })]);
-            y.domain([0, d3.max(data, function(d) { return d["speechiness"]; })]);
+    drawAxes();
+    this.startDrawing = function(country){
+    	//Load data
+	    d3.csv("data/artist-data.csv", function(error, data) {
+	        self.predata = data;
+	        self.data = [];
+	        
+	        
+		        self.predata.forEach(function(d){
+		        	if(d["Country"] == country){
+	        		x.domain([0, d3.max(data, function(d) { return d["energy"]; })]);
+	            	y.domain([0, d3.max(data, function(d) { return d["speechiness"]; })]);
+	            	self.data.push(d);
+		        }
+		        })
+		    
 
-        })
-
-        draw();
-    });
-
-    function draw(){
-    	// Create x- and yAxis
+	        drawDots();
+	    });
+    }
+    
+    function drawAxes(){
+    	    	// Create x- and yAxis
 	/*	svg.append("g")
 		    .attr("class", "axis")
 		    .attr("transform", "translate(10," + (height - 20) + ")")
@@ -95,6 +103,10 @@ function sp(){
             .attr("dy", ".75em")
             .attr("transform", "rotate(-90)")
             .text("Life satisfaction");
+
+    }
+
+    function drawDots(){
 
 		
 		svg.selectAll("circle")
