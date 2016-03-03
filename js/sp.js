@@ -6,6 +6,11 @@ function sp(){
         width = spDiv.width() - margin.right - margin.left,
         height = spDiv.height() - margin.top - margin.bottom;
 
+    //initialize tooltip
+    var tip = d3.select("#sp").append("div")
+        .attr("class", "tooltip")               
+        .style("opacity", 0);
+
     // create scale functions
     var x = d3.scale.linear()
         .range([0, width])
