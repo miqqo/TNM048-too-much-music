@@ -1,6 +1,7 @@
 function map(){
 
 	var choosen = [];
+    var colorCountry = {};
 
     var zoom = d3.behavior.zoom()
 		.scaleExtent([2, 8])
@@ -13,6 +14,7 @@ function map(){
         width = mapDiv.width();//- margin.right - margin.left,
         height = mapDiv.height() - margin.top - margin.bottom;
 
+    var colors = d3.scale.category20();
 
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
@@ -47,9 +49,6 @@ function map(){
     function draw(countries){
         var country = g.selectAll(".country").data(countries);
 
-        var colorCountry = {};
-        
-
 	   	var currentColor = "white";
 	        
         country.enter().insert("path")
@@ -75,7 +74,6 @@ function map(){
                 .style("opacity", 0);
             })
             .on("click",  function(d) {
-                // choosen.push(d.properties.name.toLowerCase());
                 choosen.push(d.properties.name);
                 map.selectDot(choosen);
 
@@ -86,9 +84,14 @@ function map(){
     }
 
     this.selectDot = function(value){
+        value.forEach(function(d){
+            colorCountry[d] = colors(d);
+        });
         d3.selectAll(".country")
          .style("fill",function(d){  
-            if( value.indexOf(d.properties.name) != -1) return "red";      
+            if( value.indexOf(d.properties.name) != -1){
+              return colorCountry[d.properties.name];        
+            } 
             else return "lightgray";
          });
     }
