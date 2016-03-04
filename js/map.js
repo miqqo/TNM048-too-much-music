@@ -119,6 +119,7 @@ function map(){
             }
             map.selectDot(choosen)
             sp1.updateData(choosen, colorCountry);
+            pc1.updateData("");
 
         });
 
