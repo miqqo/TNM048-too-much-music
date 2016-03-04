@@ -1,6 +1,9 @@
 function map(){
 
-	var zoom = d3.behavior.zoom()
+	var choosen = [];
+    var colorCountry = {};
+
+    var zoom = d3.behavior.zoom()
 		.scaleExtent([2, 8])
 		.on("zoom", move);
 
@@ -11,6 +14,7 @@ function map(){
         width = mapDiv.width();//- margin.right - margin.left,
         height = mapDiv.height() - margin.top - margin.bottom;
 
+    var colors = d3.scale.category20();
 
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
@@ -45,27 +49,18 @@ function map(){
     function draw(countries){
         var country = g.selectAll(".country").data(countries);
 
-        var colorCountry = {};
-
 	   	var currentColor = "white";
 	        
         country.enter().insert("path")
-        .attr("class", "country")
-        .attr("d", path)
-        .attr("id", function(d){ return d.id})
-        .attr("title", function(d) { return d.properties.name})
-
-        .style('stroke-width', 1)
-        .style("fill", "lightgray")
-       /* .style("fill", function(d, i){
-                return colors(d.properties.name);
-            })*/
-        .style("stroke", "white")
-
-        
-
-        //tooltip
-        .on("mousemove", function(d) {
+            .attr("class", "country")
+            .attr("d", path)
+            .attr("id", function(d){ return d.id})
+            .attr("title", function(d) { return d.properties.name})
+            .style('stroke-width', 1)
+            .style("fill", "lightgray")
+            .style("stroke", "white")
+            //tooltip
+            .on("mousemove", function(d) {
                 tip.transition()
                 .duration(200)
                 .style("opacity", 1);
@@ -78,30 +73,27 @@ function map(){
                 .duration(500)      
                 .style("opacity", 0);
             })
-          //  .on("click", );
             .on("click",  function(d) {
-            	//detta ska skickas vidare till scatterplot!
-            //	d3.select(current).style("fill", "lightgray");
-              //  current = d3.select(this).style("fill", "red");
-              	selectCountry(d.properties.name);
-               // loadData();
-                sp1.startDrawing(d.properties.name);
+                choosen.push(d.properties.name);
+                map.selectDot(choosen);
+
+                sp1.startDrawing(choosen);
+
                
-                console.log(d.properties.name);
-
-
             });
     }
 
-    function selectCountry(value){
-
-    	d3.selectAll(".country")
-    	.style("fill",function(d){
-            if(d.properties.name == value){
-                return "red";
-            }
+    this.selectDot = function(value){
+        value.forEach(function(d){
+            colorCountry[d] = colors(d);
+        });
+        d3.selectAll(".country")
+         .style("fill",function(d){  
+            if( value.indexOf(d.properties.name) != -1){
+              return colorCountry[d.properties.name];        
+            } 
             else return "lightgray";
-        })
+         });
     }
 
     //zoom and panning method
@@ -114,6 +106,15 @@ function map(){
         g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
 
     }
+
+    //on click, reset data
+    d3.select("h4")
+        .on("click", function() {
+            for(var i = 0; i < choosen.length; i++){
+                choosen[i] = "";
+            }
+            map.selectDot(choosen)
+        });
 
 }
 

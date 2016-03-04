@@ -57,6 +57,7 @@ function pc(){
             }
         })
 
+
         draw();
     });
 
