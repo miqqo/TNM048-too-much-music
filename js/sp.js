@@ -33,7 +33,7 @@ function sp(){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    drawAxes();
+    
     this.startDrawing = function(country){
     	//Load data
     	country = country.toLowerCase();
@@ -54,6 +54,7 @@ function sp(){
 	        drawDots();
 	    });
     }
+    drawAxes();
     
     function drawAxes(){
     	    	// Create x- and yAxis
