@@ -18,11 +18,11 @@ function map(){
 
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
-        .attr("height", height)
-        .call(zoom);
+        .attr("height", height);
+        //.call(zoom);
 
 	var projection = d3.geo.mercator()
-        .center([10, 50 ])
+        .center([80, 50 ])
         .scale(300);
 
     var path = d3.geo.path()
@@ -102,7 +102,7 @@ function map(){
         var t = d3.event.translate;
         var s = d3.event.scale;
 
-        zoom.translate(t);
+       // zoom.translate(t);
         g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
 
     }
@@ -114,6 +114,7 @@ function map(){
                 choosen[i] = "";
             }
             map.selectDot(choosen)
+
         });
 
 }
