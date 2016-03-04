@@ -48,7 +48,7 @@ function sp(){
         .call(yAxis);
 
     //Load data
-    this.startDrawing = function(countries, colorCountry){ 
+    this.startDrawing = function(countries, currentCountry, colorCountry){ 
         d3.csv("data/sum-artist-data.csv", function(error, data) {
             self.predata = data;
             self.data = [];
@@ -91,7 +91,7 @@ function sp(){
              .style("opacity", 1);
              tip .html(d.Artist)
              .style("left", (d3.event.pageX - 250) + "px")     
-             .style("top", (d3.event.pageY - 40) + "px");    
+             .style("top", (d3.event.pageY - 80) + "px");    
          })
          .on("mouseout", function(d) {
              tip.transition()        
@@ -135,7 +135,74 @@ function sp(){
             else return 0.3;
         })
 
+
+
     };
+
+    this.updateData = function(countries, colorCountry){
+    	var exists = false, correctCountry = false;
+        //hämta ut aktuell data
+        self.predata.forEach(function(d){
+        	for(var j = 0; j < countries.length; j++){
+        		if(d.Country == countries[j]){
+        			currentCountry = true;
+        			self.data.forEach(function(p){
+        				if(d.Artist == p.Artist)
+        					exists = true;
+        			})
+        		}
+        	}
+
+            if(!exists && currentCountry)
+            	self.data.push(d);
+
+            exists = false;
+            currentCountry = false;
+        })
+
+
+	    var svg = d3.select('#sp')
+		    .select("svg")
+		    .selectAll('circle')
+		    .data(self.data);
+	        svg.enter()
+	        	.append('svg:circle')
+	         	.attr("class", "dot")
+		        .attr("cx", function(d) {
+		          return x(d["energy"]);
+		        })
+		        .attr("cy", function(d) {
+		          return y(d["speechiness"])
+		        })
+		        .attr("r", function(d) {
+		          return 7;
+		        })
+		        .attr("fill", "#00aa88")
+       //tooltip
+         .on("mousemove", function(d) {
+             tip.transition()
+             .duration(200)
+             .style("opacity", 1);
+             tip .html(d.Artist)
+             .style("left", (d3.event.pageX - 250) + "px")     
+             .style("top", (d3.event.pageY - 80) + "px");    
+         })
+         .on("mouseout", function(d) {
+             tip.transition()        
+             .duration(500)      
+             .style("opacity", 0);
+         })
+       .on("click",  function(d) {
+             
+         	self.selectDot(d.Artist);
+         	pc1.startDrawing(d.Artist);
+
+         });
+	        svg.exit().remove(); 
+
+	    setColor(countries, colorCountry);
+
+    }
 
 }
 

@@ -12,7 +12,12 @@ function map(){
 
 	var margin = {top: 20, right: 0, bottom: 20, left: 20},
         width = mapDiv.width();//- margin.right - margin.left,
-        height = mapDiv.height() - margin.top - margin.bottom;
+        height = mapDiv.height() - margin.top - margin.bottom;  
+
+        //initialize tooltip
+    var tip = d3.select("#map").append("div")
+        .attr("class", "tooltip")               
+        .style("opacity", 0);
 
     var colors = d3.scale.category20();
 
@@ -32,11 +37,7 @@ function map(){
 	var g = svg.append("g");
 	var colors = d3.scale.category20b();
 	var countries = [];
-
-	//initialize tooltip
-    var tip = d3.select("#map").append("div")
-        .attr("class", "tooltip")               
-        .style("opacity", 0);
+    var counter = 0;
 
     d3.json("data/eu.topojson", function(error, data){
         var countries = topojson.feature(data, data.objects.europe).features;
@@ -77,8 +78,11 @@ function map(){
                 choosen.push(d.properties.name);
                 map.selectDot(choosen);
 
-                sp1.startDrawing(choosen, colorCountry);
-
+                if(counter == 0){
+                    sp1.startDrawing(choosen, d.properties.name, colorCountry);
+                }
+                else{ sp1.updateData(choosen, colorCountry);}
+                counter++;
                
             });
     }

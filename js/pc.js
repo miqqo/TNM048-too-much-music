@@ -104,8 +104,8 @@ function pc(){
                 tip.transition()
                 .duration(200)
                 .style("opacity", 1);
-                tip .html(d.title)
-                .style("left", (d3.event.pageX) + "px")     
+                tip.html(d.title)
+                .style("left", (d3.event.pageX + 20) + "px")     
                 .style("top", (d3.event.pageY + 30) + "px");    
             })
             .on("mouseout", function(d){
@@ -168,6 +168,17 @@ function pc(){
                 .style('stroke-width', 1)
                 .style('stroke', 'steelblue');    
         svg.exit().remove(); 
+
+    }
+
+    function setColor(value, colorCountry){
+
+        d3.selectAll("circle")
+         .style("fill",function(d){  
+            if( value.indexOf(d.Country) != -1){
+              return colorCountry[d.Country];        
+            } 
+         });
 
     }
 
