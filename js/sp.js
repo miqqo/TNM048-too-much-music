@@ -28,6 +28,8 @@ function sp(){
         .scale(y)
         .orient("left");
 
+    var clickedDot = "null";
+
     // Create SVG element
     var svg = d3.select("#sp").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -95,8 +97,9 @@ function sp(){
              .style("opacity", 0);
          })
        .on("click",  function(d) {
-             self.selectDot(d.Artist);
-             pc1.startDrawing(d.Artist);
+             
+         	self.selectDot(d.Artist);
+         	pc1.startDrawing(d.Artist);
 
          });
 
@@ -104,10 +107,16 @@ function sp(){
 
     //method for selecting the dot from other components
     this.selectDot = function(value){
+    	
+    	//om det är en ny artist: rensa data i pc
+    	if(clickedDot != value && clickedDot != "null"){
+    		pc1.updateData(value);
+    	}
 
         d3.selectAll("circle")
         .style("opacity",function(d){
             if(d.Artist == value){
+            	clickedDot = value;
                 return 1;
             }
             else return 0.3;

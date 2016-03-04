@@ -27,6 +27,7 @@ function pc(){
     var svg = d3.select("#pc").append("svg:svg")
         .attr("width", width + margin[1] + margin[3])
         .attr("height", height + margin[0] + margin[2])
+        .attr("id","pc_svg")
         .append("svg:g")
         .attr("transform", "translate(" + margin[3] + "," + margin[0] + ")");
 
@@ -39,32 +40,33 @@ function pc(){
         // Artist, title, acousticness, tempo, danceability, energy, instrumentalness, speechiness
         d3.csv("data/song-data.csv", function(data) {
 
-        // Extract the list of dimensions and create a scale for each.
-        x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
-            return (d != "title" && d != "Artist") &&  (
-            y[d] = d3.scale.linear().domain(d3.extent(data, function(p){
-                return +p[d];
-            }))
-            .range([height, 0]));
-        }));
+            // Extract the list of dimensions and create a scale for each.
+            x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
+                return (d != "title" && d != "Artist") &&  (
+                y[d] = d3.scale.linear().domain(d3.extent(data, function(p){
+                    return +p[d];
+                }))
+                .range([height, 0]));
+            }));
 
-        self.fullData = data;
-        self.data = [];
-        //hämta ut aktuell data
-        self.fullData.forEach(function(d){
-            if(d.Artist == artist){
-                self.data.push(d);
-            }
-        })
+            self.fullData = data;
+            self.data = [];
+            //hämta ut aktuell data
+            self.fullData.forEach(function(d){
+                if(d.Artist == artist){
+                    self.data.push(d);
+                }
+            })
 
 
-        draw();
-    });
+            draw();
+        });
 
     }
+
     self.startDrawing("");
 
-    function drawAxes(){
+  /*  function drawAxes(){
 
 
     svg.append("g")
@@ -77,7 +79,7 @@ function pc(){
             .attr("y", -6);
 
 
-    }
+    }*/
 
     function draw(){
 
@@ -147,9 +149,26 @@ function pc(){
                 else return 0.3;
                 })
     };
-    
 
+    this.updateData = function(artist){
 
+        //hämta ut aktuell data
+        self.fullData.forEach(function(d){
+            if(d.Artist == artist){
+                self.data.push(d);
+            }
+        });
 
+    var svg = d3.select('#pc').select("svg").selectAll('path').data(self.data);
+        svg.enter().append('svg:path')
+                .attr('d', line(self.data) + 'Z')
+                .style('stroke-width', 1)
+                .style('stroke', 'steelblue');
+        svg.attr('d', line(self.data) + 'Z')
+                .style('stroke-width', 1)
+                .style('stroke', 'steelblue');    
+        svg.exit().remove(); 
+
+    }
 
 }
