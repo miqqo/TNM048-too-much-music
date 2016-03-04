@@ -19,8 +19,6 @@ function map(){
         .attr("class", "tooltip")               
         .style("opacity", 0);
 
-    var colors = d3.scale.category20();
-
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
         .attr("height", height);
@@ -35,7 +33,7 @@ function map(){
 
 	//behöver g initieras på annat sätt?
 	var g = svg.append("g");
-	var colors = d3.scale.category20b();
+	var colors = d3.scale.category10();
 	var countries = [];
     var counter = 0;
 

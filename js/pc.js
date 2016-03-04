@@ -114,7 +114,6 @@ function pc(){
                 .style("opacity", 0);
             })
             .on("click", function(d){
-                console.log(d);
                 self.selectLine(d.title);
 
             });
@@ -146,7 +145,6 @@ function pc(){
 
     this.selectLine = function(value){
         d3.selectAll("path")
-            //.data(self.data)
             .style("opacity", function(d){
                 if( value.indexOf(d.title) != -1)
                     return 1;
