@@ -77,7 +77,7 @@ function map(){
                 choosen.push(d.properties.name);
                 map.selectDot(choosen);
 
-                sp1.startDrawing(choosen);
+                sp1.startDrawing(choosen, colorCountry);
 
                
             });

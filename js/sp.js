@@ -48,19 +48,21 @@ function sp(){
         .call(yAxis);
 
     //Load data
-    this.startDrawing = function(countries){ 
+    this.startDrawing = function(countries, colorCountry){ 
         d3.csv("data/sum-artist-data.csv", function(error, data) {
             self.predata = data;
             self.data = [];
                 
             self.predata.forEach(function(d){
                 for(var i = 0; i < countries.length; i++){
-                       if(d["Country"] == countries[i].toLowerCase())
+                       if(d["Country"] == countries[i])
                             self.data.push(d);   
                 }
             })             
 
             drawDots();
+            setColor(countries, colorCountry);
+
         });
     }
     self.startDrawing("");
@@ -101,6 +103,17 @@ function sp(){
          	self.selectDot(d.Artist);
          	pc1.startDrawing(d.Artist);
 
+         });
+
+    }
+
+    function setColor(value, colorCountry){
+
+    	d3.selectAll("circle")
+         .style("fill",function(d){  
+            if( value.indexOf(d.Country) != -1){
+              return colorCountry[d.Country];        
+            } 
          });
 
     }
