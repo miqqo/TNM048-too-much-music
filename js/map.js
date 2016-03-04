@@ -118,6 +118,7 @@ function map(){
                 choosen[i] = "";
             }
             map.selectDot(choosen)
+            sp1.updateData(choosen, colorCountry);
 
         });
 
