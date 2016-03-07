@@ -33,6 +33,9 @@ function sp(){
     var clickedDot = "null";
     var colorArray ={};
 
+    document.getElementById("artist").innerHTML = "";
+
+
     // Create SVG element
     var svg = d3.select("#sp").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -161,12 +164,16 @@ function sp(){
     		else return 0.5;
     	})
 
+      document.getElementById("artist").innerHTML = artist;
+
     };
 
     this.updateData = function(countries, colorCountry){
     	var exists = false, currentCountry = false;
-    	if(countries[0] == "")
-    		self.data = [];
+    	if(countries[0] == ""){
+          self.data = [];
+          document.getElementById("artist").innerHTML = "";
+      }
         //hämta ut aktuell data
         self.predata.forEach(function(d){
         	for(var j = 0; j < countries.length; j++){

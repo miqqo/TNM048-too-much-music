@@ -42,6 +42,11 @@ html {
     height: 10vh;
 }
 
+.artist{
+    width: 100%;
+    height: 5vh;
+}
+
 .graphs{
     width: 100%;
     /*height: 100%;*/
@@ -50,6 +55,13 @@ html {
 #about{
     font-family: 'Open Sans';
     font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#artist{
+    font-family: 'Open Sans';
+    font-size: 12em;
     font-weight: bold;
     text-align: center;
 }
