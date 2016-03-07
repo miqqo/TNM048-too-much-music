@@ -74,7 +74,7 @@ function map(){
             })
             .on("click",  function(d) {
                 choosen.push(d.properties.name);
-                map.selectDot(choosen);
+                map.selectCountry(choosen);
 
                 if(counter == 0){
                     sp1.startDrawing(choosen, d.properties.name, colorCountry);
@@ -85,7 +85,7 @@ function map(){
             });
     }
 
-    this.selectDot = function(value){
+    this.selectCountry = function(value){
         value.forEach(function(d){
             colorCountry[d] = colors(d);
         });
@@ -115,7 +115,7 @@ function map(){
             for(var i = 0; i < choosen.length; i++){
                 choosen[i] = "";
             }
-            map.selectDot(choosen)
+            map.selectCountry(choosen)
             sp1.updateData(choosen, colorCountry);
             pc1.updateData("");
 

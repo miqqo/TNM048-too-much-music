@@ -94,41 +94,41 @@ function sp(){
     function drawDots(){
 
     	svg.selectAll("circle")
-    	.data(self.data)
-    	.enter()
-    	.append("circle")
-    	.attr("class", "dot")
-    	.attr("cx", function(d) {
-    		return x(d["energy"]);
-    	})
-    	.attr("cy", function(d) {
-    		return y(d["speechiness"])
-    	})
-    	.attr("r", function(d) {
-    		return 7;
-    	})
-    	.attr("fill", "#00aa88")
-       //tooltip
-       .on("mousemove", function(d) {
-       	tip.transition()
-       	.duration(200)
-       	.style("opacity", 1);
-       	tip .html(d.Artist)
-       	.style("left", (d3.event.pageX - 250) + "px")     
-       	.style("top", (d3.event.pageY - 80) + "px");    
-       })
-       .on("mouseout", function(d) {
-       	tip.transition()        
-       	.duration(500)      
-       	.style("opacity", 0);
-       })
-       .on("click",  function(d) {
+      	.data(self.data)
+      	.enter()
+      	.append("circle")
+      	.attr("class", "dot")
+      	.attr("cx", function(d) {
+      		return x(d["energy"]);
+      	})
+      	.attr("cy", function(d) {
+      		return y(d["speechiness"])
+      	})
+      	.attr("r", function(d) {
+      		return 7;
+      	})
+      	.attr("fill", "#00aa88")
+         //tooltip
+         .on("mousemove", function(d) {
+         	tip.transition()
+           	.duration(100)
+           	.style("opacity", 1);
+         	
+          tip .html(d.Artist)
+         	  .style("left", (d3.event.pageX - 150) + "px")     
+            .style("top", (d3.event.pageY-1000) + "px");   
+         })
+         .on("mouseout", function(d) {
+         	tip.transition()        
+           	.duration(500)      
+           	.style("opacity", 0);
+         })
+         .on("click",  function(d) {
 
-       	self.selectDot(d.Country, d.Artist);
-       	pc1.startDrawing(d.Artist);
+         	self.selectDot(d.Country, d.Artist);
+         	pc1.startDrawing(d.Artist);
 
-       });
-
+         });
    }
 
    function setColor(value, colorCountry){
@@ -211,8 +211,8 @@ function sp(){
     	       	.style("opacity", 1);
             
             tip .html(d.Artist)
-    	       	.style("left", (d3.event.pageX - 250) + "px")     
-    	       	.style("top", (d3.event.pageY - 80) + "px");    
+    	       	.style("left", (d3.event.pageX - 150) + "px")     
+              .style("top", (d3.event.pageY-1000) + "px");  
 	       })
 	       .on("mouseout", function(d) {
   	       	tip.transition()        

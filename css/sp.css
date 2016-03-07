@@ -21,7 +21,7 @@ line#bestfit {
 
 text {
     font-size: 13px;
-    font-family: 'Avenir'
+    font-family: 'Open Sans';
     fill: #000;
 }
 
@@ -31,7 +31,7 @@ text {
     /*width: 50vw;*/
 }
 
-/*.axis path,
+.axis path,
 .axis line {
     fill: none;
     stroke: #000;
@@ -39,6 +39,6 @@ text {
 }
 
 .dot {
-    stroke: #000;
+    /*stroke: #000;*/
     cursor:pointer;
-}*/
+}
