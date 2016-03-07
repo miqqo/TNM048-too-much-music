@@ -144,9 +144,10 @@ function pc(){
     }
 
     this.selectLine = function(value){
-        d3.selectAll("path")
+        d3.select("#pc_svg")
+            .selectAll("path")
             .style("opacity", function(d){
-                if( value.indexOf(d.title) != -1)
+                if(d.title == value)
                     return 1;
                 else return 0.3;
                 })
