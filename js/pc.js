@@ -144,9 +144,10 @@ function pc(){
     }
 
     this.selectLine = function(value){
-        d3.selectAll("path")
+        d3.select("#pc_svg")
+            .selectAll("path")
             .style("opacity", function(d){
-                if( value.indexOf(d.title) != -1)
+                if(d.title == value)
                     return 1;
                 else return 0.3;
                 })
@@ -173,13 +174,21 @@ function pc(){
 
     }
 
-    function setColor(value, colorCountry){
+    self.setColor = function(country, artist, currentColor){
 
-        d3.selectAll("circle")
-         .style("fill",function(d){  
-            if( value.indexOf(d.Country) != -1){
-              return colorCountry[d.Country];        
-            } 
+        //hämta ut aktuell data
+        self.fullData.forEach(function(d){
+            if(d.Artist == artist){
+                self.data.push(d);
+            }
+        });
+
+        d3.select("#pc_svg")
+            .selectAll("path")
+             .style("fill",function(d){  
+                if( d.Artist == artist){
+                  return currentColor[country];        
+                } 
          });
 
     }

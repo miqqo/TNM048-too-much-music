@@ -31,6 +31,7 @@ function sp(){
     .orient("left");
 
     var clickedDot = "null";
+    var colorArray ={};
 
     // Create SVG element
     var svg = d3.select("#sp").append("svg")
@@ -49,8 +50,27 @@ function sp(){
     .attr("transform", "translate("+1+"," + 0 +")")
     .call(yAxis);
 
+    // Add x-axis label
+    svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/1.5)
+        .attr("y", height + 30)
+        .text("ENERGY");
+
+    // Add y-axis label
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -40)
+        .attr("x", -100)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("SPEECHINESS");
+
     //Load data
     this.startDrawing = function(countries, currentCountry, colorCountry){ 
+      colorArray = colorCountry;
     	d3.csv("data/sum-artist-data.csv", function(error, data) {
     		self.predata = data;
     		self.data = [];
@@ -89,28 +109,26 @@ function sp(){
       	})
       	.attr("fill", "#00aa88")
          //tooltip
-        .on("mousemove", function(d) {
+         .on("mousemove", function(d) {
          	tip.transition()
            	.duration(100)
            	.style("opacity", 1);
-
-          tip.html(d.Artist)
-            .style("left", (d3.event.pageX - 150) + "px")     
-            .style("top", (d3.event.pageY-1000) + "px");
-           	   
+         	
+          tip .html(d.Artist)
+         	  .style("left", (d3.event.pageX - 150) + "px")     
+            .style("top", (d3.event.pageY-1000) + "px");   
          })
          .on("mouseout", function(d) {
          	tip.transition()        
-         	.duration(500)      
-         	.style("opacity", 0);
+           	.duration(500)      
+           	.style("opacity", 0);
          })
          .on("click",  function(d) {
 
-         	self.selectDot(d.Artist);
+         	self.selectDot(d.Country, d.Artist);
          	pc1.startDrawing(d.Artist);
 
          });
-
    }
 
    function setColor(value, colorCountry){
@@ -125,17 +143,20 @@ function sp(){
    }
 
     //method for selecting the dot from other components
-    this.selectDot = function(value){
+    this.selectDot = function(country, artist){
     	
     	//om det är en ny artist: rensa data i pc
-    	if(clickedDot != value && clickedDot != "null"){
-    		pc1.updateData(value);
+    	if(clickedDot != artist && clickedDot != "null"){
+    		pc1.updateData(artist);
+        pc1.setColor(country, artist, colorArray)
     	}
+
+      
 
     	d3.selectAll("circle")
     	.style("opacity",function(d){
-    		if(d.Artist == value){
-    			clickedDot = value;
+    		if(d.Artist == artist){
+    			clickedDot = artist;
     			return 1;
     		}
     		else return 0.5;
@@ -200,9 +221,9 @@ function sp(){
     	       	.style("opacity", 0);
 	       })
 	       .on("click",  function(d) {
+	       	self.selectDot(d.Country, d.Artist);
+	       	pc1.startDrawing(d.Artist);
 
-  	       	self.selectDot(d.Artist);
-  	       	pc1.startDrawing(d.Artist);
 
 	       });
 	       svg.exit().remove(); 
