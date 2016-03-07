@@ -17,13 +17,21 @@ line#bestfit {
     stroke: #ccc;
     fill: none;
     shape-rendering: crispEdges;
-}
+}*/
 
 text {
-    font-size: 12px;
-    fill: #888;
-}*/
-.axis path,
+    font-size: 13px;
+    font-family: 'Avenir'
+    fill: #000;
+}
+
+#sp{
+    height: 40vh;
+    margin-bottom: 10vh;
+    /*width: 50vw;*/
+}
+
+/*.axis path,
 .axis line {
     fill: none;
     stroke: #000;
@@ -33,4 +41,4 @@ text {
 .dot {
     stroke: #000;
     cursor:pointer;
-}
+}*/
