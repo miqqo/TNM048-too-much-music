@@ -132,10 +132,8 @@ function sp(){
     			clickedDot = value;
     			return 1;
     		}
-    		else return 0.3;
+    		else return 0.5;
     	})
-
-
 
     };
 
