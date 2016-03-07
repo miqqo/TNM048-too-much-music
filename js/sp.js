@@ -2,9 +2,11 @@ function sp(){
     var self = this; // for internal d3 functions
     var spDiv = $("#sp");
 
-    var margin = {top: 20, right: 200, bottom: 30, left: 40},
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = spDiv.width() - margin.right - margin.left,
     height = spDiv.height() - margin.top - margin.bottom;
+
+    console.log("width: " + spDiv.width())
 
     //initialize tooltip
     var tip = d3.select("#sp").append("div")
@@ -13,8 +15,8 @@ function sp(){
 
     // create scale functions
     var x = d3.scale.linear()
-    .range([0, width])
-    .domain([0 , 5]);
+      .range([0, width])
+      .domain([0 , 5]);
 
     var y = d3.scale.linear()
     .range([height, 0])
@@ -56,10 +58,12 @@ function sp(){
     		self.predata.forEach(function(d){
     			for(var i = 0; i < countries.length; i++){
     				if(d["Country"] == countries[i])
-    					self.data.push(d);   
+    					self.data.push(d);  
+             
     			}
     		})             
 
+        
     		drawDots();
     		setColor(countries, colorCountry);
 
@@ -70,40 +74,40 @@ function sp(){
     function drawDots(){
 
     	svg.selectAll("circle")
-    	.data(self.data)
-    	.enter()
-    	.append("circle")
-    	.attr("class", "dot")
-    	.attr("cx", function(d) {
-    		return x(d["energy"]);
-    	})
-    	.attr("cy", function(d) {
-    		return y(d["speechiness"])
-    	})
-    	.attr("r", function(d) {
-    		return 7;
-    	})
-    	.attr("fill", "#00aa88")
-       //tooltip
-       .on("mousemove", function(d) {
-       	tip.transition()
-       	.duration(200)
-       	.style("opacity", 1);
-       	tip .html(d.Artist)
-       	.style("left", (d3.event.pageX - 250) + "px")     
-       	.style("top", (d3.event.pageY - 80) + "px");    
-       })
-       .on("mouseout", function(d) {
-       	tip.transition()        
-       	.duration(500)      
-       	.style("opacity", 0);
-       })
-       .on("click",  function(d) {
+      	.data(self.data)
+      	.enter()
+      	.append("circle")
+      	.attr("class", "dot")
+      	.attr("cx", function(d) {
+      		return x(d["energy"]);
+      	})
+      	.attr("cy", function(d) {
+      		return y(d["speechiness"])
+      	})
+      	.attr("r", function(d) {
+      		return 7;
+      	})
+      	.attr("fill", "#00aa88")
+         //tooltip
+        .on("mousemove", function(d) {
+         	tip.transition()
+         	.duration(200)
+         	.style("opacity", 1);
+         	tip .html(d.Artist)
+         	.style("left", (d3.event.pageX - 250) + "px")     
+         	.style("top", (d3.event.pageY - 80) + "px");    
+         })
+         .on("mouseout", function(d) {
+         	tip.transition()        
+         	.duration(500)      
+         	.style("opacity", 0);
+         })
+         .on("click",  function(d) {
 
-       	self.selectDot(d.Artist);
-       	pc1.startDrawing(d.Artist);
+         	self.selectDot(d.Artist);
+         	pc1.startDrawing(d.Artist);
 
-       });
+         });
 
    }
 
@@ -180,22 +184,23 @@ function sp(){
 	        .attr("fill", "#00aa88")
 	       //tooltip
 	       .on("mousemove", function(d) {
-	       	tip.transition()
-	       	.duration(200)
-	       	.style("opacity", 1);
-	     tip .html(d.Artist)
-	       	.style("left", (d3.event.pageX - 250) + "px")     
-	       	.style("top", (d3.event.pageY - 80) + "px");    
+  	       	tip.transition()
+    	       	.duration(200)
+    	       	.style("opacity", 1);
+            
+            tip .html(d.Artist)
+    	       	.style("left", (d3.event.pageX - 250) + "px")     
+    	       	.style("top", (d3.event.pageY - 80) + "px");    
 	       })
 	       .on("mouseout", function(d) {
-	       	tip.transition()        
-	       	.duration(500)      
-	       	.style("opacity", 0);
+  	       	tip.transition()        
+    	       	.duration(500)      
+    	       	.style("opacity", 0);
 	       })
 	       .on("click",  function(d) {
 
-	       	self.selectDot(d.Artist);
-	       	pc1.startDrawing(d.Artist);
+  	       	self.selectDot(d.Artist);
+  	       	pc1.startDrawing(d.Artist);
 
 	       });
 	       svg.exit().remove(); 
