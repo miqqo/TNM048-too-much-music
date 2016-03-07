@@ -32,6 +32,8 @@ function pc(){
         .attr("transform", "translate(" + margin[3] + "," + margin[0] + ")");
 
     var counter = 0;
+    var currentCountry = "";
+    var colorArray = {};
 
 
     this.startDrawing = function(artist){
@@ -60,6 +62,7 @@ function pc(){
 
 
             draw();
+            self.setColor();
         });
 
     }
@@ -115,6 +118,7 @@ function pc(){
             })
             .on("click", function(d){
                 self.selectLine(d.title);
+                self.setColor();
 
             });
 
@@ -153,7 +157,7 @@ function pc(){
                 })
     };
 
-    this.updateData = function(artist){
+    this.updateData = function(country, artist, theColorArray){
 
         //hämta ut aktuell data
         self.fullData.forEach(function(d){
@@ -166,30 +170,23 @@ function pc(){
         svg.enter().append('svg:path')
                 .attr('d', line(self.data) + 'Z')
                 .style('stroke-width', 1)
-                .style('stroke', 'steelblue');
+                .style('fill', 'red');
         svg.attr('d', line(self.data) + 'Z')
                 .style('stroke-width', 1)
-                .style('stroke', 'steelblue');    
+                .style('fill', 'red');    
         svg.exit().remove(); 
+
+        currentCountry = country;
+        colorArray = theColorArray;
+        self.setColor();
 
     }
 
-    self.setColor = function(country, artist, currentColor){
-
-        //hämta ut aktuell data
-        self.fullData.forEach(function(d){
-            if(d.Artist == artist){
-                self.data.push(d);
-            }
-        });
+    this.setColor = function(){
 
         d3.select("#pc_svg")
             .selectAll("path")
-             .style("fill",function(d){  
-                if( d.Artist == artist){
-                  return currentColor[country];        
-                } 
-         });
+             .style("stroke",colorArray[currentCountry]);
 
     }
 
