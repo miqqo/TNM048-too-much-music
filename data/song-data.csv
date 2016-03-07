@@ -1,4 +1,4 @@
-Artist,title,acousticness,tempo,danceability,energy,instrumentalness,speechiness
+Artist,title,Acousticness,Tempo,Danceability,Energy,Instrumentalness,Speechiness
 ABBA,Put On Your White Sombrero,0.31723,82.06,0.444035,0.69297,0.000076,0.02787
 ABBA,I Do I Do I Do I Do I Do,0.13912,110.243,0.451532,0.766632,0.000002,0.031369
 ABBA,Öh vilka tider,0.639611,133.434,0.718856,0.65325,0,0.032489
