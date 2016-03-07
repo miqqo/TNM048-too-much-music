@@ -177,7 +177,7 @@ function pc(){
         svg.exit().remove(); 
 
         currentCountry = country;
-        colorArray = colorArray;
+        colorArray = theColorArray;
         self.setColor();
 
     }
