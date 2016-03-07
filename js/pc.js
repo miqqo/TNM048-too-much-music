@@ -186,7 +186,7 @@ function pc(){
 
         d3.select("#pc_svg")
             .selectAll("path")
-             .style("stroke",colorArray[currentCountry]);
+            .style("stroke",colorArray[currentCountry]);
 
     }
 
