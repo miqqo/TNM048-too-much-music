@@ -147,8 +147,7 @@ function sp(){
     	
     	//om det är en ny artist: rensa data i pc
     	if(clickedDot != artist && clickedDot != "null"){
-    		pc1.updateData(artist);
-        pc1.setColor(country, artist, colorArray)
+    		pc1.updateData(country, artist, colorArray);
     	}
 
       
