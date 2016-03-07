@@ -91,11 +91,13 @@ function sp(){
          //tooltip
         .on("mousemove", function(d) {
          	tip.transition()
-         	.duration(200)
-         	.style("opacity", 1);
-         	tip .html(d.Artist)
-         	.style("left", (d3.event.pageX - 250) + "px")     
-         	.style("top", (d3.event.pageY - 80) + "px");    
+           	.duration(100)
+           	.style("opacity", 1);
+
+          tip.html(d.Artist)
+            .style("left", (d3.event.pageX - 150) + "px")     
+            .style("top", (d3.event.pageY-1000) + "px");
+           	   
          })
          .on("mouseout", function(d) {
          	tip.transition()        
@@ -189,8 +191,8 @@ function sp(){
     	       	.style("opacity", 1);
             
             tip .html(d.Artist)
-    	       	.style("left", (d3.event.pageX - 250) + "px")     
-    	       	.style("top", (d3.event.pageY - 80) + "px");    
+    	       	.style("left", (d3.event.pageX - 150) + "px")     
+              .style("top", (d3.event.pageY-1000) + "px");  
 	       })
 	       .on("mouseout", function(d) {
   	       	tip.transition()        
