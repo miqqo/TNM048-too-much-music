@@ -122,6 +122,10 @@ function pc(){
 
             });
 
+    /*var test = d3.select("#pc_svg")
+            .selectAll("path")
+        test.exit().remove();*/
+
 
         // Add a group element for each dimension.
         var g = svg.selectAll(".dimension")
@@ -139,6 +143,8 @@ function pc(){
             .attr("text-anchor", "middle")
             .attr("y", -9)
             .text(String);
+
+         
     }
 
      // Returns the path for a given data point.
@@ -166,15 +172,13 @@ function pc(){
             }
         });
 
-    var svg = d3.select('#pc').select("svg").selectAll('path').data(self.data);
-        svg.enter().append('svg:path')
-                .attr('d', line(self.data) + 'Z')
-                .style('stroke-width', 1)
-                .style('fill', 'red');
-        svg.attr('d', line(self.data) + 'Z')
-                .style('stroke-width', 1)
-                .style('fill', 'red');    
-        svg.exit().remove(); 
+  //      draw();
+
+        var svg = d3.select('#pc').select("svg").selectAll('path').data(self.data);
+            svg.enter().append('svg:path')
+                    .attr('d', line)
+            svg.attr('d', line)
+            svg.exit().remove(); 
 
         currentCountry = country;
         colorArray = theColorArray;
