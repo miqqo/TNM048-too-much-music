@@ -33,6 +33,9 @@ function sp(){
     var clickedDot = "null";
     var colorArray ={};
 
+    document.getElementById("artist").innerHTML = "";
+
+
     // Create SVG element
     var svg = d3.select("#sp").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -56,7 +59,8 @@ function sp(){
         .attr("text-anchor", "end")
         .attr("x", width/1.5)
         .attr("y", height + 30)
-        .text("ENERGY");
+        .attr("font-size", "9pt")
+        .text("Energy");
 
     // Add y-axis label
     svg.append("text")
@@ -66,7 +70,8 @@ function sp(){
         .attr("x", -100)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
-        .text("SPEECHINESS");
+        .attr("font-size", "9pt")
+        .text("speechiness");
 
     //Load data
     this.startDrawing = function(countries, currentCountry, colorCountry){ 
@@ -161,12 +166,17 @@ function sp(){
     		else return 0.5;
     	})
 
+      //kolla hur långt namnet är
+      document.getElementById("artist").innerHTML = artist;
+
     };
 
     this.updateData = function(countries, colorCountry){
     	var exists = false, currentCountry = false;
-    	if(countries[0] == "")
-    		self.data = [];
+    	if(countries[0] == ""){
+          self.data = [];
+          document.getElementById("artist").innerHTML = "";
+      }
         //hämta ut aktuell data
         self.predata.forEach(function(d){
         	for(var j = 0; j < countries.length; j++){
