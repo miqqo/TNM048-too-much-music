@@ -59,7 +59,8 @@ function sp(){
         .attr("text-anchor", "end")
         .attr("x", width/1.5)
         .attr("y", height + 30)
-        .text("ENERGY");
+        .attr("font-size", "9pt")
+        .text("Energy");
 
     // Add y-axis label
     svg.append("text")
@@ -69,7 +70,8 @@ function sp(){
         .attr("x", -100)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
-        .text("SPEECHINESS");
+        .attr("font-size", "9pt")
+        .text("speechiness");
 
     //Load data
     this.startDrawing = function(countries, currentCountry, colorCountry){ 
@@ -164,6 +166,7 @@ function sp(){
     		else return 0.5;
     	})
 
+      //kolla hur långt namnet är
       document.getElementById("artist").innerHTML = artist;
 
     };
