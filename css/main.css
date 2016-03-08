@@ -89,6 +89,10 @@ html {
     margin-top: -8vh;
 }
 
+.bottom{
+    margin-top: -20vh;
+}
+
 #button{
     background-color: #FFFFFF;
     color: #F05F40;
@@ -102,6 +106,8 @@ html {
     height: 55px;
     margin: 6vh 0 0 0;
     text-align: center;
+    /*margin-top: -2px;*/
+    margin: -2px 0 15px 0;
     /*padding-top: 11px;*/
 }
 
