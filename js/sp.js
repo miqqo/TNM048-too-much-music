@@ -2,7 +2,7 @@ function sp(){
     var self = this; // for internal d3 functions
     var spDiv = $("#sp");
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    var margin = {top: 20, right: 20, bottom: 50, left: 50},
     width = spDiv.width() - margin.right - margin.left,
     height = spDiv.height() - margin.top - margin.bottom;
 
@@ -58,19 +58,17 @@ function sp(){
         .attr("class", "x label")
         .attr("text-anchor", "end")
         .attr("x", width/1.5)
-        .attr("y", height + 30)
-        .attr("font-size", "9pt")
-        .text("Total Energy");
+        .attr("y", height + 40)
+        .text("Total energy");
 
     // Add y-axis label
     svg.append("text")
         .attr("class", "y label")
         .attr("text-anchor", "end")
-        .attr("y", -40)
+        .attr("y", -48)
         .attr("x", -100)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
-        .attr("font-size", "9pt")
         .text("Total speechiness");
 
     //Load data
