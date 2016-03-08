@@ -173,7 +173,7 @@ function sp(){
 
     this.updateData = function(countries, colorCountry){
     	var exists = false, currentCountry = false;
-    	if(countries[0] == ""){
+      if(countries.length < 1){
           self.data = [];
           document.getElementById("artist").innerHTML = "";
       }

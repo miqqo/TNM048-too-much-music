@@ -112,9 +112,7 @@ function map(){
     //on click, reset data
     d3.select("button")
         .on("click", function() {
-            for(var i = 0; i < choosen.length; i++){
-                choosen[i] = "";
-            }
+            choosen = [];
             map.selectCountry(choosen)
             sp1.updateData(choosen, colorCountry);
             pc1.updateData("");
