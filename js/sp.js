@@ -108,7 +108,7 @@ function sp(){
       		return y(d["speechiness"])
       	})
       	.attr("r", function(d) {
-      		return 7;
+      		return 10;
       	})
       	.attr("fill", "#00aa88")
          //tooltip
@@ -209,7 +209,7 @@ function sp(){
 	        	return y(d["speechiness"])
 	        })
 	        .attr("r", function(d) {
-	        	return 7;
+	        	return 10;
 	        })
 	        .attr("fill", "#00aa88")
 	       //tooltip

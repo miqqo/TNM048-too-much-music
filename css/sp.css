@@ -38,10 +38,6 @@ text {
     shape-rendering: crispEdges;
 }
 
-.axis text{
-    font-size: 13px;
-}
-
 .dot {
     /*stroke: #000;*/
     cursor:pointer;
