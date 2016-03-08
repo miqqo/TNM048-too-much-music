@@ -64,8 +64,8 @@ function map(){
                 .duration(200)
                 .style("opacity", 1);
                 tip.html(d.properties.name)
-                .style("left", (d3.event.pageX) + "px")     
-                .style("top", (d3.event.pageY - 40) + "px");    
+                .style("left", (d3.event.pageX-1000) + "px")     
+                .style("top", (d3.event.pageY - 950) + "px");    
             })
             .on("mouseout", function(d) {
                 tip.transition()        
